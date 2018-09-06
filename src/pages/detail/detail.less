@@ -1,0 +1,296 @@
+.box{
+  padding: 60rpx 0rpx;
+  .bt{
+    padding-bottom: 40rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    border-bottom: 1px solid #c9c9c9;
+  }
+  .progress{
+    padding: 0 20rpx;
+    margin-bottom: 35rpx;
+  }
+
+  .proBox{
+    padding: 0 30rpx;
+  }
+
+  .gress{
+    display: flex;
+    margin-top: -34rpx;
+    .cell{
+      width: 110rpx;
+      text-align: center;
+    }
+    .mou{
+      flex: 1;
+    }
+    .dot{
+      width: 52rpx;
+      height: 52rpx;
+      background-color: #fff;
+      border-radius: 50%;
+      margin: 0 auto;
+      border: 1px solid #ececec;
+      text-align: center;
+      line-height: 52rpx;
+      color: #ececec;
+      font-size: 20rpx;
+      .icons{
+
+      }
+    }
+    .exp{
+      font-size: 10rpx;
+      color: #585858;
+    }
+    .ext{
+      color: #282828;
+      display: inline-block;
+      margin: 10rpx 0 6rpx;
+      font-weight: bold;
+      font-size: 16rpx;
+    }
+    .acdot{
+      background-color: #FFDA33;
+      border: 1px solid #FFDA33;
+    }
+  }
+}
+.cons{
+
+  swiper{
+    height: 400rpx;
+  }
+}
+.slide-image{
+  // width: 100%;
+}
+.auth{
+  padding: 20rpx 60rpx;
+  .head{
+    text-align: center;
+    border-bottom: 1px solid #c9c9c9;
+    & > text{
+      display: block;
+    }
+    .num{
+      color: #585858;
+      font-size: 35rpx;
+    }
+    .name{
+      font-size: 50rpx;
+      color: #000;
+      margin: 20rpx 0;
+    }
+    .info{
+      font-size: 15rpx;
+      color: #585858;
+      padding-bottom: 30rpx;
+    }
+  }
+  .bodys{
+    padding: 30rpx 0;
+    display: flex;
+    align-items: top;
+    & > view{
+      // display: inline-block;
+      // display: table-cell;
+      // vertical-align: middle;
+    }
+
+    .left{
+      overflow: hidden;
+      image{
+        width: 60rpx;
+        height: 60rpx;
+        border-radius: 50%;
+      }
+    }
+    .mid{
+      padding: 0 20rpx;
+      .title{
+        font-size: 22rpx;
+        color: #000;
+      }
+      .ttl{
+        font-size: 14rpx;
+        color: #585858;
+        margin-top: 5rpx;
+      }
+    }
+    .last{
+      flex: 1;
+      text-align: right;
+      font-size: 20rpx;
+      color: #c9c9c9;
+    }
+  }
+  .btnBox{
+    display: flex;
+    & > view{
+      flex: 1;
+      & > button{
+        width: 90%;
+      }
+    }
+    .left{
+      text-align: left;
+    }
+    .right{
+      text-align: right;
+    }
+  }
+}
+
+textarea{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 25rpx;
+  color: #585858;
+}
+.discuss{
+  text-align: center;
+  padding: 55rpx;
+  font-size: 25rpx;
+}
+.discussTt{
+  
+  textarea{
+    background-color: #f5f5f5;
+    height: 160rpx;
+    margin-bottom: 20rpx;
+    font-size: 25rpx;
+  }
+  .disBtn{
+    text-align: right;
+    & > button{
+      width: 150rpx;
+    }
+  }
+}
+
+
+
+.btmBox{
+  padding: 40rpx;
+  .total{
+    font-size: 20rpx;
+    color: #c9c9c9;
+  }
+  .discussBox{
+    display: flex;
+    padding: 20rpx 0;
+    padding-bottom: 0;
+    border-bottom: 1px solid #f4f4f4;
+    .img{
+      width: 80rpx;
+      image{
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+      }
+    }
+    .content{
+      flex: 1;
+      padding-left: 20rpx;
+      width: 100%;
+      .tt{
+        font-size: 20rpx;
+        color: #000;
+        & > text{
+          color: #c9c9c9;
+        }
+      }
+      .leave{
+        font-size: 20rpx;
+        color: #585858;
+      }
+
+      .other{
+        background-color: #f4f4f4;
+        position: relative;
+        margin-top: 20rpx;
+        padding: 20rpx;
+        border-radius: 10rpx;
+        &::before{
+          content: '';
+          position: absolute;
+          left: 20rpx;
+          top: -34rpx;
+          width: 0px;
+          height: 0px;
+          border-top: 20rpx solid transparent;
+          border-left: 20rpx solid transparent;
+          border-right: 20rpx solid transparent;
+          border-bottom: 20rpx solid #f4f4f4;
+        }
+        .ott{
+          font-size: 18rpx;
+          .leaveO{
+            display: block;
+            color: #585858;
+          }
+        }
+      }
+
+      .leaveBtn{
+        text-align: right;
+        padding: 0 20rpx;
+        & > text{
+          display: inline-block;
+          color: #c9c9c9;
+          padding-left: 10rpx;
+          vertical-align: middle;
+        }
+        .icon{
+          font-size: 30rpx;
+        }
+        .iconC{
+          color: #ccc;
+        }
+      }
+      
+      .text-wrp{
+        display: none;
+      }
+      .otLeave{
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        font-size: 25rpx;
+        height: 160rpx;
+      }
+      .showT{
+        display: block;
+      }
+      .push{
+        padding-top: 10rpx;
+        text-align: right;
+        & > button{
+          height: 40rpx;
+          line-height: 40rpx;
+          padding-top: 5rpx 20rpx;
+          font-size: 20rpx;
+        }     
+      }
+    }
+  }
+}
+
+.active{
+  background-color: #e0aa00!important;
+}
+.red{
+  color: #FF0042;
+}
+.center{
+  padding-top: 20rpx;
+  button{
+    width: 100%;
+    background-color: #0096FF;
+    color: #fff;
+  }
+}
+
+
+

@@ -1,0 +1,265 @@
+.box {
+  padding: 60rpx 0rpx;
+}
+.box .bt {
+  padding-bottom: 40rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  border-bottom: 1px solid #c9c9c9;
+}
+.box .progress {
+  padding: 0 20rpx;
+  margin-bottom: 35rpx;
+}
+.box .proBox {
+  padding: 0 30rpx;
+}
+.box .gress {
+  display: flex;
+  margin-top: -34rpx;
+}
+.box .gress .cell {
+  width: 110rpx;
+  text-align: center;
+}
+.box .gress .mou {
+  flex: 1;
+}
+.box .gress .dot {
+  width: 52rpx;
+  height: 52rpx;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 1px solid #ececec;
+  text-align: center;
+  line-height: 52rpx;
+  color: #ececec;
+  font-size: 20rpx;
+}
+.box .gress .exp {
+  font-size: 10rpx;
+  color: #585858;
+}
+.box .gress .ext {
+  color: #282828;
+  display: inline-block;
+  margin: 10rpx 0 6rpx;
+  font-weight: bold;
+  font-size: 16rpx;
+}
+.box .gress .acdot {
+  background-color: #FFDA33;
+  border: 1px solid #FFDA33;
+}
+.cons swiper {
+  height: 400rpx;
+}
+.auth {
+  padding: 20rpx 60rpx;
+}
+.auth .head {
+  text-align: center;
+  border-bottom: 1px solid #c9c9c9;
+}
+.auth .head > text {
+  display: block;
+}
+.auth .head .num {
+  color: #585858;
+  font-size: 35rpx;
+}
+.auth .head .name {
+  font-size: 50rpx;
+  color: #000;
+  margin: 20rpx 0;
+}
+.auth .head .info {
+  font-size: 15rpx;
+  color: #585858;
+  padding-bottom: 30rpx;
+}
+.auth .bodys {
+  padding: 30rpx 0;
+  display: flex;
+  align-items: top;
+}
+.auth .bodys .left {
+  overflow: hidden;
+}
+.auth .bodys .left image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+.auth .bodys .mid {
+  padding: 0 20rpx;
+}
+.auth .bodys .mid .title {
+  font-size: 22rpx;
+  color: #000;
+}
+.auth .bodys .mid .ttl {
+  font-size: 14rpx;
+  color: #585858;
+  margin-top: 5rpx;
+}
+.auth .bodys .last {
+  flex: 1;
+  text-align: right;
+  font-size: 20rpx;
+  color: #c9c9c9;
+}
+.auth .btnBox {
+  display: flex;
+}
+.auth .btnBox > view {
+  flex: 1;
+}
+.auth .btnBox > view > button {
+  width: 90%;
+}
+.auth .btnBox .left {
+  text-align: left;
+}
+.auth .btnBox .right {
+  text-align: right;
+}
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 25rpx;
+  color: #585858;
+}
+.discuss {
+  text-align: center;
+  padding: 55rpx;
+  font-size: 25rpx;
+}
+.discussTt textarea {
+  background-color: #f5f5f5;
+  height: 160rpx;
+  margin-bottom: 20rpx;
+  font-size: 25rpx;
+}
+.discussTt .disBtn {
+  text-align: right;
+}
+.discussTt .disBtn > button {
+  width: 150rpx;
+}
+.btmBox {
+  padding: 40rpx;
+}
+.btmBox .total {
+  font-size: 20rpx;
+  color: #c9c9c9;
+}
+.btmBox .discussBox {
+  display: flex;
+  padding: 20rpx 0;
+  padding-bottom: 0;
+  border-bottom: 1px solid #f4f4f4;
+}
+.btmBox .discussBox .img {
+  width: 80rpx;
+}
+.btmBox .discussBox .img image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+.btmBox .discussBox .content {
+  flex: 1;
+  padding-left: 20rpx;
+  width: 100%;
+}
+.btmBox .discussBox .content .tt {
+  font-size: 20rpx;
+  color: #000;
+}
+.btmBox .discussBox .content .tt > text {
+  color: #c9c9c9;
+}
+.btmBox .discussBox .content .leave {
+  font-size: 20rpx;
+  color: #585858;
+}
+.btmBox .discussBox .content .other {
+  background-color: #f4f4f4;
+  position: relative;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+.btmBox .discussBox .content .other::before {
+  content: '';
+  position: absolute;
+  left: 20rpx;
+  top: -34rpx;
+  width: 0px;
+  height: 0px;
+  border-top: 20rpx solid transparent;
+  border-left: 20rpx solid transparent;
+  border-right: 20rpx solid transparent;
+  border-bottom: 20rpx solid #f4f4f4;
+}
+.btmBox .discussBox .content .other .ott {
+  font-size: 18rpx;
+}
+.btmBox .discussBox .content .other .ott .leaveO {
+  display: block;
+  color: #585858;
+}
+.btmBox .discussBox .content .leaveBtn {
+  text-align: right;
+  padding: 0 20rpx;
+}
+.btmBox .discussBox .content .leaveBtn > text {
+  display: inline-block;
+  color: #c9c9c9;
+  padding-left: 10rpx;
+  vertical-align: middle;
+}
+.btmBox .discussBox .content .leaveBtn .icon {
+  font-size: 30rpx;
+}
+.btmBox .discussBox .content .leaveBtn .iconC {
+  color: #ccc;
+}
+.btmBox .discussBox .content .text-wrp {
+  display: none;
+}
+.btmBox .discussBox .content .otLeave {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  font-size: 25rpx;
+  height: 160rpx;
+}
+.btmBox .discussBox .content .showT {
+  display: block;
+}
+.btmBox .discussBox .content .push {
+  padding-top: 10rpx;
+  text-align: right;
+}
+.btmBox .discussBox .content .push > button {
+  height: 40rpx;
+  line-height: 40rpx;
+  padding-top: 5rpx 20rpx;
+  font-size: 20rpx;
+}
+.active {
+  background-color: #e0aa00!important;
+}
+.red {
+  color: #FF0042;
+}
+.center {
+  padding-top: 20rpx;
+}
+.center button {
+  width: 100%;
+  background-color: #0096FF;
+  color: #fff;
+}

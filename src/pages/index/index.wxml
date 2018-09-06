@@ -1,0 +1,101 @@
+<!--index.wxml-->
+<view class="boxes">
+    <view class="nav">
+      <view bindtap="handleNav" data-id="1" class="tab l"><text class="{{tab == 1 ? 'acTab' : ''}}">推荐作品</text></view>
+      <view bindtap="handleNav" data-id="2" class="tab"><text class="{{tab == 2 ? 'acTab' : ''}}">所有作品</text></view>
+    </view>
+    
+    <view wx:if="{{tab == 1}}" class="mains">
+      <view class="top"></view>
+      <view class="contain">
+        <view class="cons">
+          <swiper 
+            circular
+            previous-margin="{{pre}}"
+            next-margin="{{next}}"
+            bindchange="handleChange" 
+            indicator-dots="{{dots}}" 
+            autoplay="{{auto}}" 
+            current="{{current}}">
+            <block wx:for="{{cells}}" wx:key="index" wx:if="{{index < 10}}">
+              <swiper-item>
+                <view class="cell {{current === index ? 'scal' : ''}}">
+                  <image bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}" src="{{host + item.images[0].url}}"></image>
+                  <view class="mes">
+                    <view class="proMes">
+                      <view class="til" animation="{{animationData}}"> <text class="iconfont icon-xin-tianchong red"></text> {{item.num_votes}}票</view>
+                      <view class="info">{{item.title}}</view> 
+                    </view>
+                    <view class="bodys">
+                      <image class="left" src="{{authorIdJSON[item.author_id] ? (host + authorIdJSON[item.author_id].avatar) : '/images/touxiang.png'}}"></image>
+                      <view class="mid">
+                        <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
+                        <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].intro : ' '}}</view>
+                      </view>
+                      <view class="last">
+                        <view>
+                          <!-- <image src="/images/ping.png"></image>  -->
+                          <!-- <span style="font-size: 24rpx" class="iconfont icon-yanjing"></span> -->
+                          <!-- 66 -->
+                        </view>
+                        <view>{{item.CHN}}</view>
+                      </view>
+                    </view>
+
+
+                    <view class="btnBox">
+                      <button size="mini" disabled="{{loadings}}" data-id="{{item.id}}" data-index="{{index}}"  bindtap="prise" hover-class="active" style="margin-right: 20rpx" type="primary">给他投票</button>
+                      <button size="mini" bindtap="noPrise">暂不投票</button>
+                    </view>
+                  </view>
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+      </view>
+    </view>
+
+    
+    <view wx:elif="{{tab == 2}}" class="mainsT">
+      <scroll-view scroll-y="true" bindscrolltolower="bindscrolltolower" >
+        <view class="content">
+          <view  wx:for="{{cells}}" wx:key="index" class="cell">
+            <view class="cellCon" bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}">
+              <image src="{{host + item.images[0].url}}"></image>
+              <view class="conText">
+                <view class="text">
+                  <view><span style="font-size: 18rpx" class="iconfont icon-xin-tianchong red"></span> {{item.num_votes}}票</view>
+                  <view>{{item.title}}</view>
+                  <view>{{item.description}}</view> 
+                </view>
+                <view class="bodys">
+                  <image class="left" src="{{authorIdJSON[item.author_id] ? (host + authorIdJSON[item.author_id].avatar) : '/images/touxiang.png'}}"></image>
+                  <view class="mid">
+                    <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
+                    <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].intro : ' '}}</view>
+                  </view>
+                  <view class="last">
+                    <view>
+                        <!-- <image src="/images/ping.png"></image>  -->
+                        <!-- <span style="font-size: 16rpx" class="iconfont icon-yanjing"></span> -->
+                        <!-- 66 -->
+                    </view>
+                    <view>{{item.CHN}}</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>  
+
+        <view class="more" wx:if="{{loading}}">
+          <image src="/images/loading.gif"></image> 正在载入更多...
+        </view>
+        <view class="more" wx:if="{{line}}">我也是有底线的！</view>
+      </scroll-view>
+    </view>
+
+
+    <view wx:else></view>
+</view>

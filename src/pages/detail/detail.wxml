@@ -1,0 +1,126 @@
+<!--logs.wxml-->
+<view class="box normals">
+  <view class="bt">
+    <view class="progress">
+      <view class="proBox">
+        <progress percent="20" active activeColor="#FFDA33" stroke-width="5"/>
+      </view>
+      <view class="gress">
+        <view class="cell" >
+          <view class="dot acdot">
+            <text class="iconfont icon-duigou"></text>
+          </view>
+          <text class="ext">投票阶段</text>
+          <view class="exp">345/123</view>
+        </view> 
+        <view class="mou"></view>
+        <view class="cell" >
+          <view class="dot">0%</view>
+          <text class="ext">投票阶段</text>
+          <view class="exp">345/123</view>
+        </view> 
+        <view class="mou"></view>
+        <view class="cell" >
+          <view class="dot">0%</view>
+          <text class="ext">投票阶段</text>
+          <view class="exp">众筹完成一周内</view>
+        </view> 
+        <view class="mou"></view>
+        <view class="cell" >
+          <view class="dot">0%</view>
+          <text class="ext">投票阶段</text>
+          <view class="exp">等待生产完成</view>
+        </view> 
+      </view>
+    </view>
+    <view class="cons">
+      <swiper 
+        indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" 
+        interval="{{interval}}" 
+        duration="{{duration}}"
+      >
+        <block wx:key="index" wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image src="{{host + item.url}}" mode="scaleToFill" class="slide-image"/>
+          </swiper-item>
+        </block>
+      </swiper> 
+
+      <view class="auth">
+        <view class="head" >
+          <text class="num" animation="{{animationData}}"><text class="iconfont icon-xin-tianchong red"></text> {{message.num_votes ? message.num_votes : 0}}票</text>
+          <text class="name">{{message.title}}</text>
+          <text class="info">{{message.description}}</text>
+        </view>
+        <view class="bodys">
+          <view class="left">
+            <image src="{{person.avatar ? (host + person.avatar) : src}}"></image>
+          </view>
+          <view class="mid">
+            <view class="title">{{person.nickname}}</view>
+            <view class="ttl">{{person.intro}}</view>
+          </view>
+          <view class="last">作品：{{person.num_products ? person.num_products : 0}}</view>
+        </view>
+
+        <view class="btnBox">
+          <view class="left">
+           <button disabled="{{loading}}" bindtap="prise" hover-class="active" type="primary" size="mini" class="tou">给TA投票</button> 
+          </view>
+          <view class="right">
+           <button disabled="true" type="warn" size="mini" class="tou">支持众筹</button> 
+          </view>
+        </view>
+        <view class="center">
+          <button bindtap="links" size="mini">关注公众号</button>
+        </view>
+
+        <view class="discuss">讨论区</view>
+      </view>
+      <view class="discussTt">
+        <textarea value="{{firValue}}" bindinput="valueChange" maxlength="100" placeholder="说点什么..." maxlength="100"/>
+        <view class="disBtn">
+          <button disabled="{{(firValue && dis) ? false : true}}" bindtap="takeComment" type="primary" size="mini">评论</button>
+        </view>
+      </view>
+    </view>
+  </view> 
+
+
+  <view class="btmBox">
+    <text class="total">全部评论： {{comments.length}}</text>
+
+    <view wx:for="{{comments}}" wx:key="index" class="discussBox" style="padding-bottom: 20rpx" >
+      <view class="img" >
+        <image src="{{item.author && item.author.avatar ? (host + item.author.avatar) : src}}"></image>
+      </view>
+      <view class="content">
+        <view class="tt">
+          {{item.author && item.author.nickname ? item.author.nickname : ''}} <text style="padding: 0 10rpx"> {{item.CHN}}</text>
+        </view>
+        <text class="leave">{{item.content}}</text>
+
+        <!-- <view style="display: none;" class="other">
+          <view class="ott">
+            CREARE
+            <text class="leaveO">留言内容哈哈哈三六九等浪费</text>
+          </view>
+        </view> -->
+        
+        <!-- <view class="leaveBtn">
+          <text bindtap="handlePing" data-index="{{index}}" class="iconfont icon-liuyan2 icon iconC"></text>
+        </view>
+        <view  class="text-wrp {{item.bool ? 'showT' : ''}}">
+          <textarea class="otLeave" placeholder="请输入内容" maxlength="100"/>
+          <view class="push">
+            <button size="mini">发布</button>
+          </view>
+        </view> -->
+        
+        
+      </view>
+    </view>
+
+  </view>
+</view>

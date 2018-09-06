@@ -1,0 +1,176 @@
+
+page{
+  background-color: #f5f5f5;
+}
+
+.messageBox{
+  min-height: 100rpx;
+  background-color: #fff;
+  .bg{
+    height: 100rpx;
+    background-color: #FFD100;
+    position: relative;
+    text-align: center;
+    .head{
+      width: 156rpx;
+      height: 156rpx;
+      position: absolute;
+      left: 50%;
+      margin-left: -78rpx;
+      bottom: -78rpx;
+      border-radius: 50%;
+      background: #fff;
+    }
+  }
+  .mes{
+    padding: 78rpx 0rpx 40rpx;
+    text-align: center;
+    .title{
+      font-size: 36rpx;
+      color: #282828;
+      margin: 15rpx 0;
+    }
+    .tt{
+      font-size: 24rpx;
+      color: #5e5e5e;
+      padding: 0 40rpx;
+    }
+  }
+}
+
+.nav{
+  display: flex;
+  background-color: #fff;
+  padding-top: 20rpx;
+  view:nth-child(1){
+    padding-right: 20rpx;
+  };
+  view:nth-child(2){
+    padding-left: 20rpx;
+  };
+  .tab{
+    flex: 1;
+    font-size: 32rpx;
+    & > text{
+      display: inline-block;
+      padding: 0rpx 20rpx;
+      padding-bottom: 30rpx;
+      border-bottom: 1px solid transparent;
+      color: #c9c9c9;
+    }
+    .acTab{
+      border-color: #282828;
+      color: #282828;
+    }
+  }
+  .l{
+    text-align: right;
+  }
+}
+
+.content{
+  padding: 50rpx 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  .cell{
+    box-sizing: border-box;
+    width: 50%;
+    margin-bottom: 40rpx;
+    padding: 0 10rpx;
+  }
+  .cellCon{
+    background-color: #fff;
+    image{
+      height: 267rpx;
+      width: 100%;
+    }
+    .conText{
+      padding: 25rpx;
+    }
+    .text{
+      text-align: center;
+      border-bottom: 1px solid #e3e3e3;
+      padding-bottom: 10rpx;
+      & > view{
+        white-space: nowrap;  
+        text-overflow:ellipsis; 
+        overflow:hidden;
+      }
+      view:nth-child(1){
+        font-size: 14rpx;
+        color: #585858;
+      };
+      view:nth-child(2){
+        font-size: 22rpx;
+        color: #282828;
+        margin: 10rpx 0 20rpx;
+      };
+      view:nth-child(3){
+        font-size: 14rpx;
+        color: #585858;
+        padding: 0 40rpx;
+      };
+    }
+
+    .bodys{
+      padding-top: 20rpx;
+      display: flex;
+      align-items: center;
+      .left{
+        width: 42rpx;
+        height: 42rpx;
+        border-radius: 50%;
+      }
+      .mid{
+        padding: 0 20rpx;
+        .title{
+          font-size: 15rpx;
+          color: #000;
+        }
+        .ttl{
+          font-size: 10rpx;
+          color: #585858;
+          margin-top: 5rpx;
+        }
+      }
+      .last{
+        flex: 1;
+        text-align: right;
+        font-size: 14rpx;
+        color: #c9c9c9;
+        image{
+          height: 13rpx;
+          width: 16rpx;
+        }
+      }
+    }
+  
+    .newBody{
+      position: relative;
+      line-height: 42rpx;
+      height: 42rpx;
+      text-align: center;
+      font-size: 14rpx;
+      color: #c9c9c9;
+      image{
+        height: 13rpx;
+        width: 16rpx;
+      }
+      & > text{
+        font-size: 14rpx;
+        position: absolute;
+        right: 10rpx;
+        bottom: 0;
+        color: #c9c9c9;
+      }
+    }
+
+
+
+  }
+}
+
+.red{
+  color: #FF0042;
+}
+

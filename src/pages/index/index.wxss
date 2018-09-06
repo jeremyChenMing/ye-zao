@@ -1,0 +1,270 @@
+page {
+  background-color: #f5f5f5;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+.userinfo-nickname {
+  color: #aaa;
+}
+.usermotto {
+  margin-top: 200px;
+}
+.logo {
+  display: flex;
+  height: 100vh;
+  line-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffc;
+}
+.nav {
+  display: flex;
+  padding-top: 20rpx;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+}
+.nav view:nth-child(1) {
+  padding-right: 20rpx;
+}
+.nav view:nth-child(2) {
+  padding-left: 20rpx;
+}
+.nav .tab {
+  flex: 1;
+  font-size: 32rpx;
+}
+.nav .tab > text {
+  display: inline-block;
+  padding: 0rpx 20rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1px solid transparent;
+  color: #c9c9c9;
+}
+.nav .tab .acTab {
+  border-color: #282828;
+  color: #282828;
+}
+.nav .l {
+  text-align: right;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10rpx;
+  margin-bottom: 50rpx;
+}
+.content .cell {
+  box-sizing: border-box;
+  width: 50%;
+  margin-bottom: 26rpx;
+  padding: 0 10rpx;
+}
+.content .cellCon {
+  background-color: #fff;
+}
+.content .cellCon image {
+  height: 267rpx;
+  width: 100%;
+}
+.content .cellCon .conText {
+  padding: 25rpx;
+}
+.content .cellCon .text {
+  text-align: center;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 20rpx;
+}
+.content .cellCon .text > view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .cellCon .text view:nth-child(1) {
+  font-size: 14rpx;
+  color: #585858;
+}
+.content .cellCon .text view:nth-child(2) {
+  font-size: 22rpx;
+  color: #282828;
+  margin: 10rpx 0 20rpx;
+}
+.content .cellCon .text view:nth-child(3) {
+  font-size: 14rpx;
+  color: #585858;
+  padding: 0 40rpx;
+}
+.content .cellCon .bodys {
+  padding-top: 20rpx;
+  display: flex;
+  align-items: center;
+}
+.content .cellCon .bodys .left {
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+}
+.content .cellCon .bodys .mid {
+  padding: 0 20rpx;
+}
+.content .cellCon .bodys .mid .title {
+  font-size: 15rpx;
+  color: #000;
+}
+.content .cellCon .bodys .mid .ttl {
+  font-size: 10rpx;
+  color: #585858;
+  margin-top: 5rpx;
+}
+.content .cellCon .bodys .last {
+  flex: 1;
+  text-align: right;
+  font-size: 14rpx;
+  color: #c9c9c9;
+}
+.content .cellCon .bodys .last image {
+  height: 13rpx;
+  width: 16rpx;
+}
+.boxes {
+  height: 100vh;
+}
+.mainsT > scroll-view {
+  position: absolute;
+  left: 0;
+  top: 116rpx;
+  bottom: 0;
+  right: 0;
+}
+.mains {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+.mains .top {
+  height: 96rpx;
+  background-color: transparent;
+}
+.mains .contain {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.cons {
+  position: relative;
+  height: 885rpx;
+  width: 100%;
+}
+.cons swiper {
+  height: 100%;
+}
+.cons .cell {
+  margin: 0 auto;
+  background-color: #fff;
+  height: 100%;
+  text-align: center;
+  border-radius: 10rpx;
+  overflow: hidden;
+  transform-origin: 50% 50%;
+  transform: scale(0.8, 0.8);
+  transition: transform linear .5s;
+  display: flex;
+  flex-direction: column;
+}
+.cons .cell > image {
+  width: 100%;
+  flex: 1;
+}
+.cons .scal {
+  transform: scale(1, 1);
+}
+.cons .mes {
+  padding: 42rpx;
+}
+.cons .mes .proMes {
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #e3e3e3;
+}
+.cons .mes .proMes .til {
+  font-size: 35rpx;
+  color: #585858;
+}
+.cons .mes .proMes .info {
+  font-size: 36rpx;
+  color: #282828;
+  font-weight: bold;
+  margin-top: 10rpx;
+}
+.cons .btnBox {
+  padding-top: 30rpx;
+}
+.cons .btnBox button {
+  width: 240rpx;
+}
+.cons .btnBox button:nth-child(1) {
+  background-color: #FFD100;
+  color: #282828;
+}
+.cons .btnBox .active {
+  background-color: #e0aa00!important;
+}
+.cons .bodys {
+  padding: 28rpx 0;
+  display: flex;
+  align-items: center;
+}
+.cons .bodys .left {
+  width: 65rpx;
+  height: 65rpx;
+  border-radius: 50%;
+}
+.cons .bodys .mid {
+  padding: 0 20rpx;
+}
+.cons .bodys .mid .title {
+  font-size: 22rpx;
+  color: #000;
+  text-align: left;
+  font-weight: bold;
+}
+.cons .bodys .mid .ttl {
+  font-size: 14rpx;
+  color: #585858;
+}
+.cons .bodys .last {
+  flex: 1;
+  text-align: right;
+  font-size: 20rpx;
+  color: #c9c9c9;
+}
+.cons .bodys .last image {
+  height: 16rpx;
+  width: 20rpx;
+}
+.red {
+  color: #FF0042;
+}
+.more {
+  text-align: center;
+  color: #c9c9c9;
+  padding-bottom: 10rpx;
+  font-size: 30rpx;
+}
+.more image {
+  width: 32rpx;
+  height: 32rpx;
+  display: inline-block;
+}
