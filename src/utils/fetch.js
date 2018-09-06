@@ -25,8 +25,6 @@ const completeHeader = (header) => {
     }
   }
 
-  // const {access_token: accessToken} = app.globalData.index.index
-
   if (!result.Authorization) {
     // result.Authorization = `Bearer ${accessToken}`
     delete result.Authorization
