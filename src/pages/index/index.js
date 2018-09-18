@@ -1,19 +1,25 @@
 //index.js
 //获取应用实例
+
+// http://bricks.upvi.com/api/v1/file/thumbnail?origin=/public/uploads/9/2018-08/shenhui1.jpg&size=100x100
+
+
 const app = getApp()
 const { getProducts, getPersonMes, givePraise, HOST } = require('../../utils/fetch')
 const { unique, formatTimeCH } = require('../../utils/util')
 
+const l = `${HOST}/api/v1/file/thumbnail?size=520x400&origin=`
+
 Page({
   data: {
     tab: 1,
-    host: HOST,
+    host: l,
     authorIdJSON: {},
     cells: [],
-    loadings: false,
+    loadings: true,
     dots: false,
     auto: false,
-    current: 0,
+    current: 1,
     pre: '80rpx',
     next: '80rpx',
 
@@ -31,7 +37,8 @@ Page({
     // wx.showShareMenu({
     //   withShareTicket: true,
     // })
-    this.getDatas('?limit=10&offset=0&order=hot')
+
+    this.getDatas('?limit=10&offset=0&order=recommend')
     let animation = wx.createAnimation({
       duration: 200,
       timingFunction: 'ease-in',
@@ -56,6 +63,7 @@ Page({
         })
       }else {
         wx.showToast({
+          image: '../../images/error.png',
           title: '获取信息失败'
         })
       }
@@ -70,9 +78,18 @@ Page({
     }
     Promise.all(arr).then( data => {
       let json = {};
+      console.log(data)
       data.map( item => {
+        if (item.data.avatar && item.data.avatar.indexOf('http') === -1) {
+          item.data.avatar = HOST + item.data.avatar
+        }
+        if (item.data.intro && item.data.intro.length > 9) {
+          item.data.strbool = true
+        }
+        item.data.str = item.data.intro.slice(0,9)
         json[item.data.id] = item.data;
       })
+      console.log(json)
       that.setData({
         authorIdJSON: json
       })
@@ -96,12 +113,13 @@ Page({
   handleNav: function(e) {
     const dataSet = e.currentTarget.dataset
     this.setData({
-      tab: dataSet.id
+      tab: dataSet.id,
+      // cells: []
     })
     // if (dataSet.id === '2') {
-    //   this.getDatas(`?limit=10&offset=${this.data.pageNum}&order=hot`)
+    //   this.getDatas(`?limit=10&offset=0&order=recommend`)
     // }else{
-    //   this.getDatas('?limit=10&offset=0&order=hot')
+    //   this.getDatas('?limit=10&offset=0&order=recommend')
     // }
   },
   
@@ -139,41 +157,62 @@ Page({
   prise: function (e) {
     const item = e.currentTarget.dataset;
     const that = this;
-    this.setData({
-      loading: true
-    })
-    givePraise(item.id /*token*/).then( data => {
-      if (data.statusCode === 200) {
-        this.data.cells[item.index].num_votes = this.data.cells[item.index].num_votes + 1
-        this.animation.scale(2,2).opacity(.5).step();
-        this.animation.scale(1,1).opacity(1).step();
-        this.setData({
-          cells: this.data.cells, 
-          animationData: this.animation.export()
-        })
-        setTimeout(function () {
-          that.setData({
-            loading: false
-          })
-        }, 1600)
-      }else{
-        wx.showModal({
-          title: `${data.data.message}`,
-          content: '需要授权用户信息！',
-          success: function(res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-              wx.switchTab({
-                url: '../logs/logs'
+    if (!app.globalData.again) {
+      // 说明这个人已经登录了，并且有了token在本地了，所以可以直接点赞
+      wx.getStorage({
+        key: 'keys',
+        success: function (res) {
+          console.log(res.data, '$%$%$') // setData: userInfo
+          const token = res.data.access_token;
+          that.setData({ loading: true})
+          givePraise(item.id, {}, token).then( data => {
+            if (data.statusCode === 200) {
+              that.data.cells[item.index].num_votes = that.data.cells[item.index].num_votes + 1
+              that.animation.scale(2,2).opacity(.5).step();
+              that.animation.scale(1,1).opacity(1).step();
+              that.setData({
+                cells: that.data.cells, 
+                animationData: that.animation.export()
               })
-            } else if (res.cancel) {
-              console.log('用户点击取消')
+              setTimeout(function () {
+                that.setData({
+                  loading: false
+                })
+              }, 1000)
+            }else{
+              that.setData({
+                loading: false
+              })
+              wx.showToast({
+                image: '../../images/error.png',
+                title: data.data.message
+              })
             }
+          })
+
+        },
+        fail: function (res) {
+          
+        }
+      })
+
+    }else{
+      wx.showModal({
+        title: '暂未获得用户相关信息',
+        content: '需要授权用户信息！',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.switchTab({
+              url: '../logs/logs'
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
           }
-        })
-      }
-    })
-    
+        }
+      })
+      
+    }
   },
   getGlobal: function () {
     const that = this;
@@ -201,13 +240,15 @@ Page({
 
 
   bindscrolltolower: function () {
+
     let index = this.data.index; //
     const offset = index * 10; // < this.data.total ? index * 10;
+    console.log('触发了', this.data.index, offset, this.data.total)
     if (offset < this.data.total) {
       this.setData({
         index: this.data.index + 1
       })
-      const search = `?limit=10&offset=${offset}&order=hot`;
+      const search = `?limit=10&offset=${offset}&order=recommend`;
       this.getDatas(search)
     } else{
       this.setData({

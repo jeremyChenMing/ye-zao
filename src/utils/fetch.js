@@ -59,7 +59,9 @@ const post = (url, data, options={}) => {
     })
   }).then(parseJSON)
 }
-export const HOST = 'https://bricks.upvi.com';
+// export const HOST = 'https://bricks.upvi.com';
+// 正式接口地址 上传的时候记得换过来
+export const HOST = 'https://api.51bricks.com'
 
 
 export const getProducts = (query) => {
@@ -68,6 +70,15 @@ export const getProducts = (query) => {
 }
 export const getProductsOfDetail = (id, query) => {
   return get(`${HOST}/api/v1/products/${id}`)
+}
+// 我的投票作品
+export const getMyVotesProducts = (accessToken) => {
+  const options = {Authorization: `Bearer ${accessToken}`}
+  return get(`${HOST}/api/v1/user/voted_products`, options)
+}
+export const getMyProducts = (accessToken) => {
+  const options = {Authorization: `Bearer ${accessToken}`}
+  return get(`${HOST}/api/v1/user/products`, options)
 }
 
 // 获取作者信息
@@ -86,8 +97,9 @@ export const getCommentsList = (id) => {
   return get(`${HOST}/api/v1/products/${id}/comments`)
 }
 // 发起评论
-export const addFirComments = (id, data) => {
-  return post(`${HOST}/api/v1/products/${id}/comments`, data)
+export const addFirComments = (id, data, accessToken) => {
+  const options = {Authorization: `Bearer ${accessToken}`}
+  return post(`${HOST}/api/v1/products/${id}/comments`, data, options)
 }
 
 
@@ -101,10 +113,16 @@ export const getUsers = () => {
 
 
 // 登录
-
-export const loginwechat = (query) => {
-  return get(`${HOST}/api/v1/auth/wechat_login${query}`)
+// 已经绑定用户登录
+export const loginwechat = (data) => {
+  return post(`${HOST}/api/v1/weapp/login`, data)
 }
+// 没有绑定用户登录
+export const againwechat = (data) => {
+  return post(`${HOST}/api/v1/weapp/userinfo`, data)
+}
+
+
 export const getProfile = (accessToken) => {
   const options = {Authorization: `Bearer ${accessToken}`}
   return get(`${HOST}/api/v1/user/profile`, options)

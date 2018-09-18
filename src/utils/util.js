@@ -17,9 +17,8 @@ const formatNumber = n => {
 const formatTimeCH = (create_time) => {
   let str = '';
   const nowTime = new Date().getTime();
-  const time = new Date(create_time).getTime(); //2018-08-02 17:42:42
+  const time = new Date(create_time).getTime() || new Date(create_time.replace(/-/g,'/')).getTime(); //2018-08-02 17:42:42
   const diff = nowTime - time; //617820202
-
   const onemini = 60 * 1000;
   const oneH = 3600 * 1000;
   const oneD = 24 * 3600 * 1000;

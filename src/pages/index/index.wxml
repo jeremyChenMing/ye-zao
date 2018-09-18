@@ -20,14 +20,14 @@
             <block wx:for="{{cells}}" wx:key="index" wx:if="{{index < 10}}">
               <swiper-item>
                 <view class="cell {{current === index ? 'scal' : ''}}">
-                  <image bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}" src="{{host + item.images[0].url}}"></image>
+                  <image bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}" src="{{host + item.images[0].url}}" mode="aspectFit"></image>
                   <view class="mes">
                     <view class="proMes">
                       <view class="til" animation="{{animationData}}"> <text class="iconfont icon-xin-tianchong red"></text> {{item.num_votes}}票</view>
                       <view class="info">{{item.title}}</view> 
                     </view>
                     <view class="bodys">
-                      <image class="left" src="{{authorIdJSON[item.author_id] ? (host + authorIdJSON[item.author_id].avatar) : '/images/touxiang.png'}}"></image>
+                      <image class="left" src="{{(authorIdJSON[item.author_id] && authorIdJSON[item.author_id].avatar) ? authorIdJSON[item.author_id].avatar : '/images/touxiang.png'}}"></image>
                       <view class="mid">
                         <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
                         <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].intro : ' '}}</view>
@@ -70,18 +70,15 @@
                   <view>{{item.description}}</view> 
                 </view>
                 <view class="bodys">
-                  <image class="left" src="{{authorIdJSON[item.author_id] ? (host + authorIdJSON[item.author_id].avatar) : '/images/touxiang.png'}}"></image>
+                  <view class="left">
+                    <image  src="{{(authorIdJSON[item.author_id] && authorIdJSON[item.author_id].avatar) ? authorIdJSON[item.author_id].avatar : '/images/touxiang.png'}}"></image>
+                  </view>
                   <view class="mid">
                     <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
-                    <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].intro : ' '}}</view>
+                    <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].str : ''}}{{authorIdJSON[item.author_id] && authorIdJSON[item.author_id].strbool ? '...' : ''}}</view>
                   </view>
                   <view class="last">
-                    <view>
-                        <!-- <image src="/images/ping.png"></image>  -->
-                        <!-- <span style="font-size: 16rpx" class="iconfont icon-yanjing"></span> -->
-                        <!-- 66 -->
-                    </view>
-                    <view>{{item.CHN}}</view>
+                    {{item.CHN}}
                   </view>
                 </view>
               </view>
@@ -90,7 +87,7 @@
         </view>  
 
         <view class="more" wx:if="{{loading}}">
-          <image src="/images/loading.gif"></image> 正在载入更多...
+          <image src="/images/g2.gif"></image> <text>正在载入更多...</text>
         </view>
         <view class="more" wx:if="{{line}}">我也是有底线的！</view>
       </scroll-view>

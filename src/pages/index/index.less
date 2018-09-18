@@ -126,10 +126,16 @@ page{
         width: 42rpx;
         height: 42rpx;
         border-radius: 50%;
+        overflow: hidden;
+        & > image{
+          width: 42rpx;
+          height: 42rpx;
+        }
       }
       .mid{
-        padding: 0 20rpx;
+        flex: 1;
         .title{
+          padding: 0 20rpx;
           font-size: 15rpx;
           color: #000;
         }
@@ -137,13 +143,13 @@ page{
           font-size: 10rpx;
           color: #585858;
           margin-top: 5rpx;
+          padding-left: 20rpx;
         }
       }
       .last{
-        flex: 1;
-        text-align: right;
-        font-size: 14rpx;
+        font-size: 10rpx;
         color: #c9c9c9;
+        text-align: right;
         image{
           height: 13rpx;
           width: 16rpx;
@@ -300,10 +306,20 @@ page{
   color: #c9c9c9;
   padding-bottom: 10rpx;
   font-size: 30rpx;
+  width: 100%;
+  // display: table-cell;
+  // vertical-align: middle;
   image{
     width: 32rpx;
     height: 32rpx;
-    display: inline-block;
+    // display: inline-block;
+    // display: table-cell;
+    // vertical-align: middle;
+  }
+  text{
+    // display: table-cell;
+    // vertical-align: middle;
+    padding-left: 20rpx;
   }
 }
 

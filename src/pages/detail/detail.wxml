@@ -42,7 +42,7 @@
       >
         <block wx:key="index" wx:for="{{imgUrls}}">
           <swiper-item>
-            <image src="{{host + item.url}}" mode="scaleToFill" class="slide-image"/>
+            <image src="{{host + item.url}}" mode="aspectFit" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper> 
@@ -55,7 +55,7 @@
         </view>
         <view class="bodys">
           <view class="left">
-            <image src="{{person.avatar ? (host + person.avatar) : src}}"></image>
+            <image src="{{person.avatar ? person.avatar : src}}"></image>
           </view>
           <view class="mid">
             <view class="title">{{person.nickname}}</view>
@@ -73,7 +73,7 @@
           </view>
         </view>
         <view class="center">
-          <button bindtap="links" size="mini">关注公众号</button>
+          <button bindtap="links" open-type="contacts" size="mini">关注公众号</button>
         </view>
 
         <view class="discuss">讨论区</view>
@@ -93,7 +93,7 @@
 
     <view wx:for="{{comments}}" wx:key="index" class="discussBox" style="padding-bottom: 20rpx" >
       <view class="img" >
-        <image src="{{item.author && item.author.avatar ? (host + item.author.avatar) : src}}"></image>
+        <image src="{{item.author && item.author.avatar ? item.author.avatar : src}}"></image>
       </view>
       <view class="content">
         <view class="tt">

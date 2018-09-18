@@ -1,17 +1,15 @@
 <!--logs.wxml-->
-<view class="center">
+<view>
+<view wx:if="{{login === 'list'}}" class="center">
   <view class="messageBox">
     <view class="bg">
-      <image class="head" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/touxiang.png'}}"></image>
+      <image class="head" src="{{userInfo.avatar ? userInfo.avatar : '/images/touxiang.png'}}"></image>
     </view>
-    <view wx:if="{{!showRecordBtn}}" class="mes">
-      <view class="title">{{userInfo.nickName ? userInfo.nickName : ''}}</view>
-      <view class="tt">一些相关简介</view>
+    <view class="mes">
+      <view class="title">{{userInfo.nickname ? userInfo.nickname : ''}}</view>
+      <view class="tt">{{userInfo.intro ? userInfo.intro : ''}}</view>
     </view>
-    <view wx:else class="mes">
-      <button wx:if="{{canIUse && showRecordBtn}}" size="mini" bindgetuserinfo="bindGetUserInfo" open-type="getUserInfo" style="background-color: #FFD100;color: #FFF">授权个人信息</button>
-    </view>
-    <button open-type="openSetting" >授权</button>
+    
     <view class="nav">
       <view bindtap="handleNav" data-id="1" class="tab l"><text class="{{tab == 1 ? 'acTab' : ''}}">个人作品</text></view>
       <view bindtap="handleNav" data-id="2" class="tab"><text class="{{tab == 2 ? 'acTab' : ''}}">投票作品</text></view>
@@ -48,10 +46,10 @@
             <view>{{item.description}}</view> 
           </view>
           <view class="bodys">
-            <image class="left" src="{{authorIdJSON[item.author_id] ? (host + authorIdJSON[item.author_id].avatar) : '/images/touxiang.png'}}"></image>
+            <image class="left" src="{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].avatar : '/images/touxiang.png'}}"></image>
             <view class="mid">
               <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
-              <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].intro : ' '}}</view>
+              <view class="ttl">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].str : ''}}{{authorIdJSON[item.author_id] && authorIdJSON[item.author_id].strbool ? '...' : ''}}</view>
             </view>
             <view class="last">
               <view>
@@ -65,4 +63,29 @@
       </view>
     </view>
   </view>
+</view>
+
+<view wx:elif="{{login === 'login'}}" class="loginBox">
+  <image class="logo"  src="/images/80.png"></image>
+  <image class="robot"  src="/images/logo.png"></image>
+  <view class="title">造生活，也造梦想</view>
+  
+  <button 
+    wx:if="{{canIUse}}" 
+    bindgetuserinfo="bindGetUserInfo" 
+    open-type="getUserInfo" 
+    size="mini"
+    class="btns" 
+  >
+  <text class="iconfont icon-weixin"></text>
+  微信一键登录
+  </button>
+  <button open-type="openSetting" style="display: none;" >授权</button>
+</view>
+
+
+<view wx:else>
+  
+</view>
+
 </view>

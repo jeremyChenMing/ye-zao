@@ -4,66 +4,45 @@ App({
   onLaunch: function () {
     const that = this;
     // 展示本地存储能力
-    console.log('展示本地存储能力')
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-    // wx.getStorage({
-    //   key: 'keys',
-    //   success: function (res) {
-    //     // console.log(res, '$%$%$')
-    //     that.globalData['keys'] = res.data
-    //   },
-    //   fail: function (res) {
-    //     // console.log(res, '$%$%$')
-    //     getUsers().then( data => {
-    //       if (data.statusCode === 200) {
-    //         let arr = {};
-    //         data.data.map( item => {
-    //           arr[item.id] = item
-    //         })
-    //         console.log(arr)
-    //         wx.setStorage({
-    //           key:"keys",
-    //           data: arr
-    //         })
-    //       }else{
-
-    //       }
-    //     })
-    //   }
-    // })
-
+    console.log('展示本地存储能力, 每次进入可以先清理一次，如果需要的话')
     
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        // console.log(res, '*****')
         if (res.code) {
-          loginwechat(`?source=wxapp&code=${res.code}`).then( token => {
-            console.log(token)
-            if (token.data && !token.data.code) {
-              if (token.data.openId) {
-                // 说明这个人没有注册
-                that.globalData.userInfo['openId'] = token.data.openId || '123'
+          loginwechat({code:res.code}).then( token => {
+            if (token.statusCode === 200) {
+              const need = token.data;
+              console.log(need, 'need')
+              if (need.token && need.token.access_token) {
+                console.log(need.token, '说明这个人已经注册过了，有相关的userinfo信息了')
+                getProfile(need.token.access_token).then( data => {
+                  if (data.statusCode === 200) {
+                        wx.setStorage({
+                          key:"keys",
+                          data: {...need.token, ...data.data}
+                        })
+                  }else{
+                    wx.showToast({
+                      image: '../../images/error.png',
+                      title: '获取信息失败'
+                    })
+                  }
+                })
+
               }else{
-                // 会直接返回给我登录的结果，token
-
-                // getProfile(token).then( data => {
-                //   if (data && !data.code) {
-                //         wx.setStorage({
-                //           key:"keys",
-                //           data: {...token, ...data}
-                //         })
-                //   }else{
-
-                //   }
-                // })
+                console.log('这个人没有经过主体授权，需要授权信息或者在个人中心请求接口')
+                wx.clearStorage()
+                that.globalData['openid'] = need.openid
+                that.globalData['again'] = true
               }
-            }else{
+            } else{
               console.log('400le')
-              // that.globalData['openId'] = token.data.openId || '123'
+              wx.showToast({
+                image: '../../images/error.png',
+                title: '获取信息失败'
+              })
             }
           })
 
@@ -76,30 +55,31 @@ App({
         }
       }
     })
-    // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     console.log(res, '---')
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           // 可以将 res 发送给后台解码出 unionId
-    //           console.log(res)
-    //           this.globalData.userInfo = res.userInfo
+    
 
-    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //           // 所以此处加入 callback 以防止这种情况
-    //           if (this.userInfoReadyCallback) {
-    //             this.userInfoReadyCallback(res)
-    //           }
+    // wx.getSetting({
+    //   success: function(res){
+    //     console.log(res,'@@@@')
+    //     if (res.authSetting['scope.userInfo']) {
+    //       console.log('授权过了')
+    //       wx.getUserInfo({
+    //         success: function(data) {
+    //           console.log(data,'@@@@')
     //         }
     //       })
+    //     }else{
+    //       console.log('没有授权')
+          
     //     }
+    //   },
+    //   fail: function () {
+    //     console.log('wxgettingSetting失败了')
     //   }
     // })
   },
   globalData: {
+    openid: '',
+    again: false,
     userInfo: null
   }
 })

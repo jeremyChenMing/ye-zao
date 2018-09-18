@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -58,6 +58,11 @@
 					"name": "个人中心",
 					"pathName": "pages/logs/logs",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "view",
+					"pathName": "pages/view/view"
 				}
 			]
 		}

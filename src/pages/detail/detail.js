@@ -2,6 +2,7 @@
 const { getProductsOfDetail, getPersonMes, givePraise, HOST, getCommentsList, addFirComments } = require('../../utils/fetch')
 const { formatTimeCH } = require('../../utils/util');
 const app = getApp();
+const l = `${HOST}/api/v1/file/thumbnail?size=335x200&origin=`
 Page({
   data: {
     comments: [],
@@ -12,7 +13,7 @@ Page({
     animationData: {},
     params: {},
     loading: false,
-    host: HOST,
+    host: l,
 
     indicatorDots: true,
     autoplay: true,
@@ -26,7 +27,7 @@ Page({
       {name: '生产中'},
     ],
 
-    firValue: undefined,
+    firValue: '',
     dis: true,
     srcs: null
   },
@@ -35,6 +36,10 @@ Page({
   },
   onLoad: function (e) {
     // console.log(e, 'onLoad')
+
+    // const startTime = new Date("2018-09-07 16:33:27")
+    // const endTime = new Date("2018-09-07 16:33:26")
+    // console.log(startTime > endTime, '-----')
     wx.showShareMenu({
       withShareTicket: true,
     })
@@ -64,6 +69,9 @@ Page({
 
     getPersonMes(e.author).then( data => {
       if (data.statusCode === 200) {
+        if (data.data.avatar && data.data.avatar.indexOf('http') === -1) {
+          data.data.avatar = HOST + data.data.avatar
+        }
         this.setData({
           person: data.data
         })
@@ -72,9 +80,6 @@ Page({
       }
     })
 
-
-    
-    this.getGlobal(e.author)
     this.commentsList()
 
   },
@@ -85,6 +90,9 @@ Page({
         console.log(data.data)
         let arr = [];
         data.data.map( item => {
+          if (item.author.avatar.indexOf('http') === -1) {
+            item.author.avatar = HOST + item.author.avatar
+          }
           item.bool = false;
           item['CHN'] = formatTimeCH(item.create_at)
           arr.push(item)
@@ -102,37 +110,59 @@ Page({
   },
   prise: function () {
     const that = this;
-    this.setData({
-      loading: true
-    })
+    if (!app.globalData.again) {
+      wx.getStorage({
+        key: 'keys',
+        success: function (res) {
+          console.log(res.data, '$%$%$') // setData: userInfo
+          const token = res.data.access_token;
+          that.setData({ loading: true})
+          givePraise(that.data.params.id, {}, token).then( data => {
+            if (data.statusCode === 200) {
+              that.data.message.num_votes = that.data.message.num_votes + 1;
+              that.animation.scale(2,2).opacity(.5).step();
+              that.animation.scale(1,1).opacity(1).step();
+              that.setData({
+                message: that.data.message, 
+                animationData: that.animation.export()
+              })
+              setTimeout(function () {
+                that.setData({
+                  loading: false
+                })
+              }, 1000)
+            }else{
+              that.setData({
+                loading: false
+              })
+              wx.showToast({
+                image: '../../images/error.png',
+                title: data.data.message
+              })
+            }
+          })
 
-    givePraise(this.data.params.id).then( data => {
-      if (data.statusCode === 200) {
-        this.data.message.num_votes = this.data.message.num_votes + 1;
-        this.animation.scale(2,2).opacity(.5).step();
-        this.animation.scale(1,1).opacity(1).step();
-        this.setData({
-          message: this.data.message, 
-          animationData: this.animation.export()
-        })
-        setTimeout(function () {
-          that.setData({
-            loading: false
-          })
-        }, 600)
-      }else{
-        wx.showToast({
-          icon: 'none',
-          mask: true,
-          title: data.data.message
-        })
-        setTimeout(function () {
-          that.setData({
-            loading: false
-          })
-        }, 600)
-      }
-    })
+        },
+        fail: function (res) {
+          
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '暂未获得用户相关信息',
+        content: '需要授权用户信息！',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.switchTab({
+              url: '../logs/logs'
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
   },
   onShareAppMessage: function (res) {
     console.log(res)
@@ -178,67 +208,49 @@ Page({
     })
   },
   takeComment: function () {
-    this.setData({dis: false})
-
-    
-    addFirComments(this.data.params.id, {content: this.data.firValue}).then( data => {
-      this.setData({dis: true})
-      if (data.statusCode === 200) {
-        this.commentsList()
-      }else{
-        
-        if (data.data.code === 'not_authenticated') {
-          wx.showModal({
-            title: `${data.data.message}`,
-            content: '需要授权用户信息！',
-            success: function(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-                wx.switchTab({
-                  url: '../logs/logs'
-                })
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-        }else{
-          wx.showToast({
-            icon: 'none',
-            mask: true,
-            title: data.data.message
-          })
-        }
-        
-      }
-
-    })
-  },
-  getGlobal: function (id) {
     const that = this;
-    if (app.globalData.keys) {
-      console.log(app.globalData.keys[id], '---')
-      this.setData({
-        person: app.globalData.keys[id],
-        authors: app.globalData.keys
-      })
-    }else{
+    if (!app.globalData.again) {
       wx.getStorage({
         key: 'keys',
         success: function (res) {
-          that.setData({
-            person: res.data[id],
-            authors: res.data,
+          console.log(res.data, '$%$%$') // setData: userInfo
+          const token = res.data.access_token;
+          that.setData({dis: false})
+          addFirComments(that.data.params.id, {content: that.data.firValue}, token).then( data => {
+            that.setData({dis: true})
+            console.log(data,'-----')
+            if (data.statusCode < 300) {
+              that.setData({firValue:  ''})
+              that.commentsList()
+            }else{
+              wx.showToast({
+                image: '../../images/error.png',
+                title: '评论失败！'
+              })
+            }
           })
         },
-        fail: function (res) {
-          console.log(res)
+        fail: function () {
+          
         }
       })
-    }
-  }
-
-
+    } else {
+      wx.showModal({
+        title: '暂未获得用户相关信息',
+        content: '需要授权用户信息！',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.switchTab({
+              url: '../logs/logs'
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }    
+  },
 
 
 })
