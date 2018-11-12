@@ -1,15 +1,19 @@
 <view>
   
-
-  <view wx:if="{{local}}" class="erBox">
-    <image src="../../images/80.png" class="logo"></image>
-    <view class="text">有料、有趣的积木玩家!</view>
-    <view class="text">在这里，一起造生活，也造梦想！</view>
-    <image src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
-    <view class="wel">欢迎关注也造公众号，关注有惊喜！</view>
+  <view wx:if="{{official === 'view'}}">
+    <view wx:if="{{local}}" class="erBox">
+      <image src="../../images/80.png" class="logo"></image>
+      <view class="text">有料、有趣的积木玩家!</view>
+      <view class="text">在这里，一起造生活，也造梦想！</view>
+      <image src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+      <view class="wel">欢迎关注也造公众号，关注有惊喜！</view>
+    </view>
+    <view wx:else>
+      <web-view src="{{srcs}}"></web-view>
+    </view>
   </view>
-  <view wx:else>
-    <web-view src="{{srcs}}"></web-view>
+  <view wx:if="{{official === 'official'}}">
+    <official-account></official-account>
   </view>
-  
+  <view wx:else></view>
 </view>

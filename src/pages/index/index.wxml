@@ -20,13 +20,16 @@
             <block wx:for="{{cells}}" wx:key="index" wx:if="{{index < 10}}">
               <swiper-item>
                 <view class="cell {{current === index ? 'scal' : ''}}">
-                  <image bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}" src="{{host + item.images[0].url}}" mode="aspectFit"></image>
+                  <image bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}" src="{{host + item.images[0].url}}" mode="scaleToFill"></image>
                   <view class="mes">
                     <view class="proMes">
-                      <view class="til" animation="{{animationData}}"> <text class="iconfont icon-xin-tianchong red"></text> {{item.num_votes}}票</view>
+                      <view class="til" animation="{{animationData}}"> 
+                        <text class="iconfont icon-xin-tianchong red"></text> {{item.num_votes}}票
+                      </view>
+                      <button class="fes" open-type="share"><text class="iconfont icon-fenxiang main"></text> </button>
                       <view class="info">{{item.title}}</view> 
                     </view>
-                    <view class="bodys">
+                    <view class="bodys" bindtap="linkSelf" data-id="{{item.author_id}}">
                       <image class="left" src="{{(authorIdJSON[item.author_id] && authorIdJSON[item.author_id].avatar) ? authorIdJSON[item.author_id].avatar : '/images/touxiang.png'}}"></image>
                       <view class="mid">
                         <view class="title">{{authorIdJSON[item.author_id] ? authorIdJSON[item.author_id].nickname : ' '}}</view>
@@ -58,18 +61,25 @@
 
     
     <view wx:elif="{{tab == 2}}" class="mainsT">
-      <scroll-view scroll-y="true" bindscrolltolower="bindscrolltolower" >
+      <scroll-view scroll-y="true" bindscrolltolower="bindscrolltolower" bindscroll="bindscroll" enable-back-to-top="true">
+        <view class="choiceBox">
+            <text bindtap="changeTabs" data-type="hot" class="{{filter == 'hot' ? 'active' : ''}}">热门</text>
+            <text class="space">空格</text>
+            <text bindtap="changeTabs" data-type="time" class="{{filter == 'time' ? 'active' : ''}}">最新</text>
+            <text class="space">空格</text>
+            <text bindtap="changeTabs" data-type="auto" class="{{filter == 'auto' ? 'active' : ''}}">综合</text>
+          </view>
         <view class="content">
-          <view  wx:for="{{cells}}" wx:key="index" class="cell">
+          <view  wx:for="{{allCells}}" wx:key="index" class="cell">
             <view class="cellCon" bindtap="bindViewTap" data-id="{{item.id}}" data-auth="{{item.author_id}}">
               <image src="{{host + item.images[0].url}}"></image>
               <view class="conText">
                 <view class="text">
                   <view><span style="font-size: 18rpx" class="iconfont icon-xin-tianchong red"></span> {{item.num_votes}}票</view>
                   <view>{{item.title}}</view>
-                  <view>{{item.description}}</view> 
+                  <view style="height: 18rpx">{{item.description}}</view> 
                 </view>
-                <view class="bodys">
+                <view class="bodys" catchtap="linkSelf" data-id="{{item.author_id}}">
                   <view class="left">
                     <image  src="{{(authorIdJSON[item.author_id] && authorIdJSON[item.author_id].avatar) ? authorIdJSON[item.author_id].avatar : '/images/touxiang.png'}}"></image>
                   </view>

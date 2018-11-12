@@ -86,7 +86,8 @@
     .info{
       font-size: 15rpx;
       color: #585858;
-      padding-bottom: 30rpx;
+      // padding-bottom: 30rpx;
+      padding: 0 20rpx 30rpx;
     }
   }
   .bodys{
@@ -198,6 +199,7 @@ textarea{
       .tt{
         font-size: 20rpx;
         color: #000;
+        margin-bottom: 10rpx;
         & > text{
           color: #c9c9c9;
         }
@@ -205,6 +207,7 @@ textarea{
       .leave{
         font-size: 20rpx;
         color: #585858;
+        display: block;
       }
 
       .other{
@@ -292,5 +295,28 @@ textarea{
   }
 }
 
+
+.share{
+  text-align: right;
+  font-size: 16px;
+  padding: 10rpx 0;
+  margin-bottom: 10rpx;
+  color: rgba(0,0,0,.8);
+  .fes{
+    background-color: #fff;
+    color: rgba(0,0,0,.8);
+    display: inline-block;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+  }
+  & > button::after{
+    border: none;
+  }
+}
+.main{
+  color: #FFDA33;
+  font-size: 20px;
+}
 
 

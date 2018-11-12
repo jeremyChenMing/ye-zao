@@ -72,9 +72,9 @@ export const getProductsOfDetail = (id, query) => {
   return get(`${HOST}/api/v1/products/${id}`)
 }
 // 我的投票作品
-export const getMyVotesProducts = (accessToken) => {
+export const getMyVotesProducts = (accessToken, url) => {
   const options = {Authorization: `Bearer ${accessToken}`}
-  return get(`${HOST}/api/v1/user/voted_products`, options)
+  return get(`${HOST}/api/v1/user/voted_products${url ? url : ''}`, options)
 }
 export const getMyProducts = (accessToken) => {
   const options = {Authorization: `Bearer ${accessToken}`}
@@ -129,9 +129,19 @@ export const getProfile = (accessToken) => {
 }
 
 
-export const getAuthOfProduce = (id) => {
-  return get(`${HOST}/api/v1/users/${id}/products`)
+export const getAuthOfProduce = (id, url) => {
+  return get(`${HOST}/api/v1/users/${id}/products${url ? url : ''}`)
 }
+
+
+
+// 获取用于详情，增加uv数量
+export const getAuthOfUV = (id) => {
+  return get(`${HOST}/api/v1/users/${id}/profile`)
+}
+
+
+
 
 
 

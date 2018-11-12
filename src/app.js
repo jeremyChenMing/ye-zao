@@ -5,7 +5,7 @@ App({
     const that = this;
     // 展示本地存储能力
     console.log('展示本地存储能力, 每次进入可以先清理一次，如果需要的话')
-    
+    wx.clearStorageSync()
     // 登录
     wx.login({
       success: res => {
@@ -14,9 +14,8 @@ App({
           loginwechat({code:res.code}).then( token => {
             if (token.statusCode === 200) {
               const need = token.data;
-              console.log(need, 'need')
               if (need.token && need.token.access_token) {
-                console.log(need.token, '说明这个人已经注册过了，有相关的userinfo信息了')
+                console.log('说明这个人已经注册过了，有相关的userinfo信息了')
                 getProfile(need.token.access_token).then( data => {
                   if (data.statusCode === 200) {
                         wx.setStorage({
@@ -46,40 +45,19 @@ App({
             }
           })
 
-          // wx.request({
-          //   url: `https://api.weixin.qq.com/sns/jscode2session?appid=wxcf39c349ae983765&secret=24e8f47d53a91f23a58d81c11b3300fb&js_code=${res.code}&grant_type=authorization_code`,
-          //   success: function (res) {
-          //     console.log(res )
-          //   }
-          // })
         }
       }
     })
     
-
-    // wx.getSetting({
-    //   success: function(res){
-    //     console.log(res,'@@@@')
-    //     if (res.authSetting['scope.userInfo']) {
-    //       console.log('授权过了')
-    //       wx.getUserInfo({
-    //         success: function(data) {
-    //           console.log(data,'@@@@')
-    //         }
-    //       })
-    //     }else{
-    //       console.log('没有授权')
-          
-    //     }
-    //   },
-    //   fail: function () {
-    //     console.log('wxgettingSetting失败了')
-    //   }
-    // })
+  },
+  onShow: function (options) {
+    console.log(options)
+    this.globalData.options = options
   },
   globalData: {
     openid: '',
     again: false,
-    userInfo: null
+    userInfo: null,
+    options: {}
   }
 })

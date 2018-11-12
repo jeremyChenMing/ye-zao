@@ -1,13 +1,9 @@
 //index.js
 //获取应用实例
 
-// http://bricks.upvi.com/api/v1/file/thumbnail?origin=/public/uploads/9/2018-08/shenhui1.jpg&size=100x100
-
-
 const app = getApp()
 const { getProducts, getPersonMes, givePraise, HOST } = require('../../utils/fetch')
 const { unique, formatTimeCH } = require('../../utils/util')
-
 const l = `${HOST}/api/v1/file/thumbnail?size=520x400&origin=`
 
 Page({
@@ -16,21 +12,23 @@ Page({
     host: l,
     authorIdJSON: {},
     cells: [],
-    loadings: true,
+    allCells: [],
+    loadings: false,
     dots: false,
     auto: false,
-    current: 1,
+    current: 0,
     pre: '80rpx',
     next: '80rpx',
 
 
 
     ids: [],
+    filter: 'hot',
     total: 0,
     loading: true,
     line: false,
     pageNum: 1,
-    index: 1
+    index: 1,
   },
   
   onLoad: function () { // 页面初始化
@@ -38,7 +36,7 @@ Page({
     //   withShareTicket: true,
     // })
 
-    this.getDatas('?limit=10&offset=0&order=recommend')
+    // this.getDatas('?limit=10&offset=0&order=recommend')
     let animation = wx.createAnimation({
       duration: 200,
       timingFunction: 'ease-in',
@@ -46,8 +44,18 @@ Page({
     this.animation = animation
 
   },
+  onShow: function () {
+    // console.log('onShow,----')
+    if (this.data.cells.length) {
+      console.log('nononononono需要再次请求')
+    }else{
+      console.log('需要再次请求')
+      this.getDatas('?limit=10&offset=0&order=recommend')
+    }
+  },
 
   getDatas: function (search, type) {
+    const that = this;
     getProducts(search).then( data => { // 获取所有产品的数据
       const need = data.data.results
       if (data.statusCode === 200) {
@@ -56,11 +64,14 @@ Page({
           this.data.ids.push(item.author_id)
         })
         this.mapAuthor(unique(this.data.ids));
-        // this.getGlobal()
         this.setData({
           cells: this.data.cells.concat(need),
-          total: data.data.count
         })
+
+        setTimeout(function () {
+          that.getAllDatas('?limit=10&offset=0&order=hot')
+        },800)
+
       }else {
         wx.showToast({
           image: '../../images/error.png',
@@ -69,31 +80,90 @@ Page({
       }
     })
   },
+  getAllDatas: function (search, type) {
+    if (type) {
+      wx.showLoading({
+        title: '正在加载....'
+      })
+    }
+    getProducts(search).then( data => { // 获取所有产品的数据
+      const need = data.data.results;
+      if (type) {
+        wx.hideLoading()
+      }
+      if (data.statusCode === 200) {
+        let arr = [];
+        need.map( item => {
+          item['CHN'] = formatTimeCH(item.create_at)
+          if (this.data.authorIdJSON[item.author_id]) {
+            
+          }else{
+            arr.push(item.author_id)
+            // this.data.ids.push(item.author_id)
+          }
+        })
+
+        this.mapAuthor(unique(arr));
+
+        this.setData({
+          allCells: this.data.allCells.concat(need),
+          total: data.data.count
+        })
+      }else {
+        console.log('错误了')
+      }
+    })
+  },
 
   mapAuthor: function (mes) { //获取作者相关信息
+    // 此接口作用本地缓存，五分钟过期就清除
     const that = this;
-    let arr = [];
-    for(let i=0; i<mes.length; i++) {
-      arr.push(getPersonMes(mes[i]))
-    }
-    Promise.all(arr).then( data => {
-      let json = {};
-      console.log(data)
-      data.map( item => {
-        if (item.data.avatar && item.data.avatar.indexOf('http') === -1) {
-          item.data.avatar = HOST + item.data.avatar
+    
+    const localJson = wx.getStorageSync('authJson') ? wx.getStorageSync('authJson'): this.data.authorIdJSON;
+    let need = [];
+      mes.map( ks => {
+        if (!localJson[ks]) {
+          need.push(ks)
         }
-        if (item.data.intro && item.data.intro.length > 9) {
-          item.data.strbool = true
+      })
+      console.log(need, 'need,除了本地缓存的外，其他都需要重新获取')
+      // push 需要的请求接口
+      let arr = [];
+      for(let i=0; i<need.length; i++) {
+        arr.push(getPersonMes(need[i]))
+      }
+      Promise.all(arr).then( data => {
+        let json = {};
+        data.map( item => {
+          if (item.data.avatar && item.data.avatar.indexOf('http') === -1) {
+            item.data.avatar = HOST + item.data.avatar
+          }
+          if (item.data.intro && item.data.intro.length > 9) {
+            item.data.strbool = true
+          }
+          item.data.str = item.data.intro.slice(0,9)
+          json[item.data.id] = item.data;
+        })
+        that.setData({
+          authorIdJSON: {...localJson, ...json}
+        })
+        // console.log(that.data.authorIdJSON)
+        if (data.length) {
+          // console.log('setStorageSync', {...localJson, ...json})
+          // wx.setStorageSync('authJson', {...localJson, ...json})
+          wx.setStorage({
+            key: 'authJson',
+            data: {...localJson, ...json},
+            success: function () {
+              console.log('success')
+            },
+            fail: function () {
+              console.log('error')
+            }
+          })
         }
-        item.data.str = item.data.intro.slice(0,9)
-        json[item.data.id] = item.data;
       })
-      console.log(json)
-      that.setData({
-        authorIdJSON: json
-      })
-    })
+
   },
   //事件处理函数
   bindViewTap: function(e) {
@@ -134,21 +204,6 @@ Page({
     }
   },
 
-
-
-  // onShareAppMessage: function (res) {
-  //   console.log(res)
-  //   if (res.from === 'menu') {
-  //     // 来自右上角的转发菜单
-  //   }else if (res.from === 'button') {
-  //     // 来自按钮转发
-  //   }
-  //   return {
-  //     title: '小霸王其乐无穷',
-  //     path: '/pages/index/index?id=123',
-  //     imageUrl: '/images/produce.png',
-  //   }
-  // },
   noPrise: function () {
     this.setData({
       current: this.data.current + 1
@@ -162,7 +217,7 @@ Page({
       wx.getStorage({
         key: 'keys',
         success: function (res) {
-          console.log(res.data, '$%$%$') // setData: userInfo
+          // console.log(res.data, '$%$%$') // setData: userInfo
           const token = res.data.access_token;
           that.setData({ loading: true})
           givePraise(item.id, {}, token).then( data => {
@@ -214,27 +269,6 @@ Page({
       
     }
   },
-  getGlobal: function () {
-    const that = this;
-    if (app.globalData.keys) {
-      this.setData({
-        authorIdJSON: app.globalData.keys
-      })
-    }else{
-      wx.getStorage({
-        key: 'keys',
-        success: function (res) {
-          that.setData({
-            authorIdJSON: res.data
-          })
-        },
-        fail: function (res) {
-          console.log(res)
-        }
-      })
-    }
-  },
-
 
 
 
@@ -243,27 +277,72 @@ Page({
 
     let index = this.data.index; //
     const offset = index * 10; // < this.data.total ? index * 10;
-    console.log('触发了', this.data.index, offset, this.data.total)
+    // console.log('触发了', this.data.index, offset, this.data.total)
     if (offset < this.data.total) {
       this.setData({
         index: this.data.index + 1
       })
-      const search = `?limit=10&offset=${offset}&order=recommend`;
-      this.getDatas(search)
+      const search = `?limit=10&offset=${offset}&order=${this.data.filter}`;
+      // this.getDatas(search)
+      this.getAllDatas(search)
     } else{
       this.setData({
         loading: false,
         line: true
       })
     }
+  },
+
+  linkSelf: function (e) {
+    const obj = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `../auth/auth?id=${obj.id}`
+    })
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'menu') {
+      // 来自右上角的转发菜单
+      return {
+        title: '也造'
+      }
+    }else if (res.from === 'button') {
+      // 来自按钮转发
+      const datas = this.data.cells[this.data.current]
+      return {
+        title: `${datas.title} -- ${this.data.authorIdJSON[datas.author_id] ? this.data.authorIdJSON[datas.author_id].nickname : ''}`,
+        path: `/pages/detail/detail?id=${datas.id}&author=${datas.author_id}`,
+        imageUrl: `${HOST}${datas.images[0].url}`,
+        success: (res) => {
+          // console.log(res, '---')
+        },
+        fail: (res) => {
+          // console.log(res)
+        }
+      }
+    }
+    
+  },
+
+
+
+  changeTabs: function (e) {
+    const para = e.currentTarget.dataset.type;
+    this.setData({
+      filter: para,
+      allCells: [],
+      total: 0,
+      index: 1
+    })
+    
+    const search = `?limit=10&offset=0&order=${para}`;
+    this.getAllDatas(search)
+  },
+  bindscroll: function (event) {
+    // console.log(event.detail.scrollTop)
+    // if (event.detail.scrollTop > 40) {
+    //   console.log('需要的内容')
+    // }
   }
-
-
-
-
-
-
-
 
 
 

@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -62,7 +62,28 @@
 				{
 					"id": -1,
 					"name": "view",
-					"pathName": "pages/view/view"
+					"pathName": "pages/view/view",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "1011",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": "1011"
+				},
+				{
+					"id": 5,
+					"name": "1047",
+					"pathName": "pages/detail/detail",
+					"query": "",
+					"scene": "1011"
+				},
+				{
+					"id": 6,
+					"name": "作者",
+					"pathName": "pages/auth/auth",
+					"query": "id=311"
 				}
 			]
 		}

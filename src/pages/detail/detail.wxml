@@ -11,24 +11,24 @@
             <text class="iconfont icon-duigou"></text>
           </view>
           <text class="ext">投票阶段</text>
-          <view class="exp">345/123</view>
+          <view class="exp">{{message.num_votes ? message.num_votes : 0}}/10000</view>
         </view> 
         <view class="mou"></view>
         <view class="cell" >
           <view class="dot">0%</view>
-          <text class="ext">投票阶段</text>
-          <view class="exp">345/123</view>
+          <text class="ext">众筹阶段</text>
+          <view class="exp">0/30000</view>
         </view> 
         <view class="mou"></view>
         <view class="cell" >
           <view class="dot">0%</view>
-          <text class="ext">投票阶段</text>
+          <text class="ext">生产优化</text>
           <view class="exp">众筹完成一周内</view>
         </view> 
         <view class="mou"></view>
         <view class="cell" >
           <view class="dot">0%</view>
-          <text class="ext">投票阶段</text>
+          <text class="ext">生产中</text>
           <view class="exp">等待生产完成</view>
         </view> 
       </view>
@@ -42,7 +42,7 @@
       >
         <block wx:key="index" wx:for="{{imgUrls}}">
           <swiper-item>
-            <image src="{{host + item.url}}" mode="aspectFit" class="slide-image"/>
+            <image src="{{host + item.url}}" bindtap="choiceImage" data-index="{{index}}" data-item="{{item}}" mode="aspectFit" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper> 
@@ -53,7 +53,7 @@
           <text class="name">{{message.title}}</text>
           <text class="info">{{message.description}}</text>
         </view>
-        <view class="bodys">
+        <view class="bodys" catchtap="linkSelf" data-id="{{person.id}}">
           <view class="left">
             <image src="{{person.avatar ? person.avatar : src}}"></image>
           </view>
@@ -63,7 +63,10 @@
           </view>
           <view class="last">作品：{{person.num_products ? person.num_products : 0}}</view>
         </view>
-
+        
+        <view class="share" bindtap="share">
+          <button class="fes" open-type="share">拉票 <text class="iconfont icon-fenxiang main"></text> </button>
+        </view>
         <view class="btnBox">
           <view class="left">
            <button disabled="{{loading}}" bindtap="prise" hover-class="active" type="primary" size="mini" class="tou">给TA投票</button> 
@@ -92,7 +95,7 @@
     <text class="total">全部评论： {{comments.length}}</text>
 
     <view wx:for="{{comments}}" wx:key="index" class="discussBox" style="padding-bottom: 20rpx" >
-      <view class="img" >
+      <view class="img" catchtap="linkSelf" data-id="{{item.author.id}}">
         <image src="{{item.author && item.author.avatar ? item.author.avatar : src}}"></image>
       </view>
       <view class="content">

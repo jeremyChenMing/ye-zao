@@ -1,5 +1,5 @@
 
-const { getProductsOfDetail, getPersonMes, givePraise, HOST, getCommentsList, addFirComments } = require('../../utils/fetch')
+const { getProductsOfDetail, getPersonMes, givePraise, HOST, getCommentsList, addFirComments, getAuthOfUV } = require('../../utils/fetch')
 const { formatTimeCH } = require('../../utils/util');
 const app = getApp();
 const l = `${HOST}/api/v1/file/thumbnail?size=335x200&origin=`
@@ -66,9 +66,9 @@ Page({
       }
     })
 
-
-    getPersonMes(e.author).then( data => {
+    getAuthOfUV(e.author).then( data => {
       if (data.statusCode === 200) {
+        console.log(data.data)
         if (data.data.avatar && data.data.avatar.indexOf('http') === -1) {
           data.data.avatar = HOST + data.data.avatar
         }
@@ -79,7 +79,6 @@ Page({
 
       }
     })
-
     this.commentsList()
 
   },
@@ -169,11 +168,11 @@ Page({
     // console.log(this.data.person)
     // console.log(this.data.message)
     // console.log(this.data.params)
-    if (res.from === 'menu') {
-      // 来自右上角的转发菜单
-    }else if (res.from === 'button') {
-      // 来自按钮转发
-    }
+    // if (res.from === 'menu') {
+    //   // 来自右上角的转发菜单
+    // }else if (res.from === 'button') {
+    //   // 来自按钮转发
+    // }
     return {
       title: `${this.data.message.title} -- ${this.data.person.nickname}`,
       path: `/pages/detail/detail?id=${this.data.params.id}&author=${this.data.params.author}`,
@@ -218,7 +217,6 @@ Page({
           that.setData({dis: false})
           addFirComments(that.data.params.id, {content: that.data.firValue}, token).then( data => {
             that.setData({dis: true})
-            console.log(data,'-----')
             if (data.statusCode < 300) {
               that.setData({firValue:  ''})
               that.commentsList()
@@ -251,6 +249,24 @@ Page({
       })
     }    
   },
+  linkSelf: function (e) {
+    const obj = e.currentTarget.dataset
+    console.log(obj)
+    wx.navigateTo({
+      url: `../auth/auth?id=${obj.id}`
+    })
+  },
+  share: function () {
+    this.onShareAppMessage()
+  },
 
+
+  choiceImage: function (e) {
+    const urls = this.data.imgUrls.map( item => {return `${HOST}${item.url}`})
+    wx.previewImage({
+      urls: urls,
+      current: e.currentTarget.dataset.index
+    })
+  }
 
 })

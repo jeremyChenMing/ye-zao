@@ -1,78 +1,57 @@
-
 page{
   background-color: #f5f5f5;
   height: 100%;
+  & > view{
+    height: 100%;
+  }
+}
+.viewBox{
+  // background-color: red;
+  position: absolute;
+  left: 0;
+  top: 13%;
+  bottom: 0;
+  right: 0;
 }
 
-.messageBox{
-  // min-height: 80rpx;
+
+.top{
   background-color: #fff;
-  .bg{
-    height: 70rpx;
-    background-color: #FFD100;
-    position: relative;
-    text-align: center;
-    .head{
-      width: 140rpx;
-      height: 140rpx;
-      position: absolute;
-      left: 50%;
-      margin-left: -70rpx;
-      bottom: -70rpx;
-      border-radius: 50%;
-      background: #fff;
-    }
-  }
-  .mes{
-    padding: 78rpx 0rpx 0rpx;
-    text-align: center;
-    .title{
-      font-size: 36rpx;
-      color: #282828;
-      margin: 15rpx 0;
-    }
-    .tt{
-      font-size: 24rpx;
-      color: #5e5e5e;
-      padding: 0 40rpx;
-      height: 17px;
-    }
-  }
-
-}
-.auth{
-  text-align: center;
-  margin-top: 100rpx;
-}
-.nav{
   display: flex;
-  background-color: #fff;
-  padding-top: 20rpx;
-  view:nth-child(1){
-    padding-right: 20rpx;
+  padding: 20rpx 40rpx;
+  .left{
+    width: 120rpx;
+    height: 120rpx;
+    text-align: center;
+    & > image{
+      height: 100%;
+      width: 120rpx;
+      border-radius: 50%;
+    }
   };
-  view:nth-child(2){
-    padding-left: 20rpx;
-  };
-  .tab{
+  .right{
     flex: 1;
-    font-size: 32rpx;
-    & > text{
-      display: inline-block;
-      padding: 0rpx 20rpx;
-      padding-bottom: 30rpx;
-      border-bottom: 1px solid transparent;
-      color: #c9c9c9;
+    align-self: center;
+    padding-left: 40rpx;
+    font-size: 20rpx;
+    & > view{
+      padding: 5px 0;
+
     }
-    .acTab{
-      border-color: #282828;
-      color: #282828;
+    .es{
+      white-space: nowrap;  
+      text-overflow:ellipsis; 
+      overflow:hidden;
     }
-  }
-  .l{
-    text-align: right;
+  };
+  .bom{
+
+    .fo{
+      float: right;
+    }
   }
 }
+
 
 .content{
   padding: 20rpx 10rpx 20rpx;
@@ -178,69 +157,6 @@ page{
 
 .red{
   color: #FF0042;
-}
-
-
-
-
-
-.loginBox{
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background-color: #FFD100;
-  // background-color: #fff43a;
-  text-align: center;
-  padding-top: 60rpx;
-  .logo{
-    width: 934rpx / 3;
-    height: 476rpx / 3;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 30rpx * 2;
-  }
-  .robot{
-    width: 300rpx / 1;
-    height: 423rpx / 1;
-  }
-  .title{
-    font-size: 18rpx * 2;
-    margin-top: 40rpx;
-  }
-  .btns{
-    background-color: #FFF; 
-    color: #44b549;
-    font-size: 16px;
-    width: 60%;
-    display: inline-block;
-    margin-top: 100rpx;
-  }
-}
-
-
-.max{
-  height: 100%;
-  // 750rpx;
-  .center{
-    height: 100%;
-    .viewBox{
-      // background-color: red;
-      position: absolute;
-      left: 0;
-      top: 32%;
-      bottom: 0;
-      right: 0;
-    }
-  }
-}
-
-
-.scroll-view-item{
-  height: 40rpx;
-  background-color: #ffc;
-  margin-bottom: 10rpx;
 }
 
 .more{
